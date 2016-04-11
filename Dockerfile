@@ -65,6 +65,7 @@ RUN export HOME=/etc/skel &&\
 ADD material/scripts    /usr/local/bin/
 ADD material/payload    /opt/payload/
 ADD material/skel		/etc/skel/
+ADD material/profile.d  /etc/profile.d/
 ENV DEFAULT_CMD="atom -w"
 
 
