@@ -36,16 +36,20 @@ RUN mkdir /tmp/go \
 
 # Atom
 ## libasound2 libgconf-2-4 libgnome-keyring-dev
+## Dependancies
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
 		wget \
 		gconf2 gconf-service libgtk2.0-0 libnotify4 libxtst6 libnss3 python gvfs-bin xdg-utils \
 		libasound2 &&\
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
+## Atom itself
 RUN wget -O /tmp/atom.deb --quiet https://atom.io/download/deb &&\
     dpkg -i /tmp/atom.deb &&\
     rm /tmp/atom.deb
-RUN export HOME=/etc/skel &&\
+## Directory to store embeded atom config
+## Plugins
+RUN export ATOM_HOME=/opt/payload/atom &&\
 	apm install \
 		autocomplete-go \
 		gofmt \
@@ -61,11 +65,9 @@ RUN export HOME=/etc/skel &&\
 		environment \
 		navigation-history
 
-#material
+# Material
 ADD material/scripts    /usr/local/bin/
 ADD material/payload    /opt/payload/
-ADD material/skel		/etc/skel/
 ADD material/profile.d  /etc/profile.d/
-ENV DEFAULT_CMD="atom -w"
-
+ENV DEFAULT_CMD="atom --foreground --add ."
 
