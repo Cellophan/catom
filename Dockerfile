@@ -3,7 +3,7 @@ MAINTAINER Cell <maintainer.docker.cell@outer.systems>
 ENV DOCKER_IMAGE="cell/catom"
 
 # Go
-ENV GO_VERSION 1.6
+ENV GO_VERSION 1.7
 RUN curl -sSL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz
 
 ## Tools
@@ -32,6 +32,7 @@ RUN mkdir /tmp/go \
 	echo gocode && go get github.com/nsf/gocode &&\
 	echo godef && go get github.com/rogpeppe/godef &&\
 	echo gorename && go get golang.org/x/tools/cmd/gorename &&\
+	echo dlv && go get github.com/derekparker/delve/cmd/dlv &&\
 	echo gometalinter && go get github.com/alecthomas/gometalinter && gometalinter --install --update
 
 # Atom
@@ -40,7 +41,7 @@ RUN mkdir /tmp/go \
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
 		wget \
-		gconf2 gconf-service libgtk2.0-0 libnotify4 libxtst6 libnss3 python gvfs-bin xdg-utils \
+		gconf2 gconf-service libgtk2.0-0 libnotify4 libxtst6 libnss3 python gvfs-bin xdg-utils libxss1 libxkbfile1 \
 		libasound2 &&\
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 ## Atom itself
