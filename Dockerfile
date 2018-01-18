@@ -1,5 +1,4 @@
-FROM cell/debsandbox
-MAINTAINER Cell <maintainer.docker.cell@outer.systems>
+FROM cell/playground
 ENV DOCKER_IMAGE="cell/catom"
 
 # Go
@@ -41,7 +40,7 @@ RUN mkdir /tmp/go \
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
 		wget \
-		gconf2 gconf-service libgtk2.0-0 libnotify4 libxtst6 libnss3 python gvfs-bin xdg-utils libxss1 libxkbfile1 \
+		gconf2 gconf-service libgtk2.0-0 libnotify4 libxtst6 libnss3 python gvfs-bin xdg-utils libxss1 libxkbfile1 libx11-xcb1 \
 		libasound2 &&\
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 ## Atom itself
@@ -50,21 +49,21 @@ RUN wget -O /tmp/atom.deb --quiet https://atom.io/download/deb &&\
     rm /tmp/atom.deb
 ## Directory to store embeded atom config
 ## Plugins
-RUN export ATOM_HOME=/opt/payload/atom &&\
-	apm install \
-		autocomplete-go \
-		gofmt \
-		gometalinter-linter \
-		navigator-godef \
-		tester-go \
-		gorename \
-		go-config \
-		go-get \
-		linter \
-		go-plus \
-		builder-go \
-		environment \
-		navigation-history
+#RUN export ATOM_HOME=/opt/payload/atom &&\
+#	apm install \
+#		autocomplete-go \
+#		gofmt \
+#		gometalinter-linter \
+#		navigator-godef \
+#		tester-go \
+#		gorename \
+#		go-config \
+#		go-get \
+#		linter \
+#		go-plus \
+#		builder-go \
+#		environment \
+#		navigation-history
 
 # Material
 ADD material/scripts    /usr/local/bin/
